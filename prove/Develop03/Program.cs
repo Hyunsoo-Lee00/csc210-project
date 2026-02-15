@@ -1,3 +1,14 @@
+/*
+This program exceeds the core requirements in the following ways:
+
+1. Users can enter their own scripture: book name, chapter, verse(s), and the scripture text.
+   - This allows full flexibility instead of using only pre-stored scriptures.
+2. Added difficulty levels: easy, medium, hard
+   - Easy: hides 1-2 words at a time
+   - Medium: hides 2-4 words at a time
+   - Hard: hides 5-7 words at a time
+*/
+
 using System;
 using System.Collections.Generic;
 
