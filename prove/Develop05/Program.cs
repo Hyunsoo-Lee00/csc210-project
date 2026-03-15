@@ -1,21 +1,13 @@
-using System;
-using System.Collections.Generic;
-
+// Creativity Feature:
+// This program includes a Level System that increases the user's level
+// as their score increases. Each level also has a title such as
+// Beginner, Follower, Disciple, Master, and Eternal Champion.
+// When the user reaches a new level, the program displays a level-up message.
 class Program
 {
     static void Main(string[] args)
     {
-        List<Shape> shapes = new List<Shape>();
-
-        shapes.Add(new Square("Red", 5));
-        shapes.Add(new Rectangle("Blue", 4, 6));
-        shapes.Add(new Circle("Green", 3));
-
-        foreach (Shape shape in shapes)
-        {
-            Console.WriteLine($"Color: {shape.GetColor()}");
-            Console.WriteLine($"Area: {shape.GetArea()}");
-            Console.WriteLine();
-        }
+        GoalManager manager = new GoalManager();
+        manager.Start();
     }
 }
