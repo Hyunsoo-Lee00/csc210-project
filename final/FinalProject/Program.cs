@@ -68,7 +68,7 @@ class Program
                 {
                     robot.MoveWithProgress(x, y, pkg.Item2);
                     currentLocation = dest;
-                    controller.AddRecord(robot.Name, dest, pkg.Item1, pkg.Item2); // 기록 저장
+                    controller.AddRecord(robot.Name, dest, pkg.Item1, pkg.Item2); 
                 }
             }
             else if (menu == "2")

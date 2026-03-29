@@ -22,7 +22,7 @@ abstract class Robot
 
     public void ShowStatus(string location)
     {
-        Console.WriteLine($"\n=== 🤖 Robot Status ===");
+        Console.WriteLine($"\n=== Robot Status ===");
         Console.WriteLine($"Location: {location}");
         Console.WriteLine($"Position: ({X:F0}, {Y:F0})");
         Console.WriteLine($"Battery: {Battery.Level:F2}%");

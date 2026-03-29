@@ -4,7 +4,7 @@ class Battery
 {
     private double level;
 
-    public double Level => level; // 읽기 전용
+    public double Level => level; 
 
     public Battery() => level = 100;
 
