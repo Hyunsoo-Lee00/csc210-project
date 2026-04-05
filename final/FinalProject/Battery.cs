@@ -1,39 +1,55 @@
 using System;
 
-class Battery
+abstract class EnergySource
 {
-    private double level;
+    protected double _level;
 
     public double Level
     {
         get
         {
-            return level;
+            return _level;
         }
     }
 
-    public Battery()
+    protected EnergySource(double initialLevel)
     {
-        level = 100;
+        _level = initialLevel;
+    }
+
+    public abstract void Consume(double amount);
+
+    public virtual void Recharge()
+    {
+        _level = 100;
+    }
+
+    public bool HasEnough(double required)
+    {
+        if (_level >= required)
+        {
+            return true;
+        }
+        return false;
+    }
+}
+
+class Battery : EnergySource
+{
+    public Battery() : base(100) { }
+
+    public override void Consume(double amount)
+    {
+        _level -= amount;
+        if (_level < 0)
+        {
+            _level = 0;
+        }
     }
 
     public void Drain(double distance, double weight)
     {
         double usage = distance * 0.1 + distance * weight * 0.02;
-        level -= usage;
-        if (level < 0)
-        {
-            level = 0;
-        }
-    }
-
-    public bool HasEnough(double required)
-    {
-        return level >= required;
-    }
-
-    public void Recharge()
-    {
-        level = 100;
+        Consume(usage);
     }
 }

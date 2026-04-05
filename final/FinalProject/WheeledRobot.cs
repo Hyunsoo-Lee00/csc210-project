@@ -11,26 +11,27 @@ class WheeledRobot : Robot
     public override void MoveWithProgress(double targetX, double targetY, double weight)
     {
         double distance = GetDistance(targetX, targetY);
-        double time = distance / Speed;
         double usage = distance * 0.1 + distance * weight * 0.02;
 
-        if (!Battery.HasEnough(usage))
+        if (!_battery.HasEnough(usage))
         {
-            Console.WriteLine($"\n Not enough battery! Needed: {usage:F2}%, Current: {Battery.Level:F2}%");
+            Console.WriteLine("\nNot enough battery! Needed: " + usage.ToString("F2") +
+                              "%, Current: " + _battery.Level.ToString("F2") + "%");
             return;
         }
 
-        Console.WriteLine("\n Wheeled Robot moving...\n");
+        Console.WriteLine("\nWheeled Robot moving...\n");
         for (int i = 1; i <= 10; i++)
         {
             Thread.Sleep(300);
-            Console.WriteLine($"Progress: {i * 10}%");
+            Console.WriteLine("Progress: " + (i * 10) + "%");
         }
 
-        Battery.Drain(distance, weight);
-        Console.WriteLine($"\n Arrived! Distance: {distance:F2} m, Time: {time:F2} s, Battery left: {Battery.Level:F2}%");
+        _battery.Drain(distance, weight);
+        Console.WriteLine("\nArrived! Distance: " + distance.ToString("F2") +
+                          " m, Battery left: " + _battery.Level.ToString("F2") + "%");
 
-        X = targetX;
-        Y = targetY;
+        _x = targetX;
+        _y = targetY;
     }
 }

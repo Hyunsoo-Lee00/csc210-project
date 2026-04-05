@@ -1,16 +1,22 @@
 using System.Collections.Generic;
 
-class CampusMap
+abstract class Map
 {
-    private Dictionary<string, (double, double)> buildings = new Dictionary<string, (double, double)>();
+    public abstract void AddLocation(string name, double x, double y);
+    public abstract (double X, double Y) GetCoordinates(string name);
+}
 
-    public void AddBuilding(string name, double x, double y)
+class CampusMap : Map
+{
+    private Dictionary<string, (double X, double Y)> _locations = new Dictionary<string, (double X, double Y)>();
+
+    public override void AddLocation(string name, double x, double y)
     {
-        buildings[name] = (x, y);
+        _locations[name] = (x, y);
     }
 
-    public (double, double) GetCoordinates(string name)
+    public override (double X, double Y) GetCoordinates(string name)
     {
-        return buildings[name];
+        return _locations[name];
     }
 }

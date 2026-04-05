@@ -1,9 +1,17 @@
 class Customer
 {
-    public string Location;
+    private string _location;
+
+    public string Location
+    {
+        get
+        {
+            return _location;
+        }
+    }
 
     public Customer(string location)
     {
-        Location = location;
+        _location = location;
     }
 }
