@@ -1,0 +1,22 @@
+# Delivery Robot Simulation
+
+## Overview
+This is a console-based robot delivery simulation program.
+You control a robot that delivers packages to various campus buildings. 
+Battery usage, package weight, and distance are simulated.
+
+## How to Run
+1. Open the solution in Visual Studio.
+2. Build and run the project.
+3. The main menu will appear in the console.
+
+## Menu Options
+1. **Deliver Package** - Select a destination and package to deliver. Robot will show estimated time and battery usage.
+2. **Recharge Battery** - Fully recharge the robot's battery.
+3. **Show Delivery Records** - View past deliveries including time, package type, weight, and destination.
+4. **Exit** - Close the program.
+
+## Notes
+- Robot cannot start a delivery if battery is insufficient.
+- Distance and battery usage are calculated automatically based on package weight and location.
+- Packages and destinations are predefined in the system.
