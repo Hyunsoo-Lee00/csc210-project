@@ -4,10 +4,7 @@ class Customer
 
     public string Location
     {
-        get
-        {
-            return _location;
-        }
+        get { return _location; }
     }
 
     public Customer(string location)

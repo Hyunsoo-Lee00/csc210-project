@@ -5,18 +5,12 @@ class DeliveryPackage
 
     public string Type
     {
-        get
-        {
-            return _type;
-        }
+        get { return _type; }
     }
 
     public double Weight
     {
-        get
-        {
-            return _weight;
-        }
+        get { return _weight; }
     }
 
     public DeliveryPackage(string type, double weight)

@@ -10,10 +10,7 @@ abstract class Robot
 
     public string Name
     {
-        get
-        {
-            return _name;
-        }
+        get { return _name; }
     }
 
     protected Robot(string name, double x, double y, double speed, Battery battery)
