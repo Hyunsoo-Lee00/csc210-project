@@ -13,7 +13,6 @@ class DeliveryManager
 
     public DeliveryManager()
     {
-        // 지도 생성
         _map = new CampusMap();
         _map.AddLocation("MC", 0, 0);
         _map.AddLocation("Hart", -80, 40);
