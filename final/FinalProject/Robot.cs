@@ -18,11 +18,14 @@ abstract class Robot
 
     public abstract void MoveWithProgress(double targetX, double targetY, double weight);
 
-    public double GetDistance(double x, double y) => Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2));
+    public double GetDistance(double x, double y)
+    {
+        return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2));
+    }
 
     public void ShowStatus(string location)
     {
-        Console.WriteLine($"\n=== Robot Status ===");
+        Console.WriteLine("\n=== Robot Status ===");
         Console.WriteLine($"Location: {location}");
         Console.WriteLine($"Position: ({X:F0}, {Y:F0})");
         Console.WriteLine($"Battery: {Battery.Level:F2}%");

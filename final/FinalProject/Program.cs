@@ -74,7 +74,7 @@ class Program
             else if (menu == "2")
             {
                 battery.Recharge();
-                Console.WriteLine("\n🔋 Battery recharged!");
+                Console.WriteLine("\n Battery recharged!");
             }
             else if (menu == "3")
             {
