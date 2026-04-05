@@ -52,68 +52,77 @@ class DeliveryManager
 
             string menuChoice = Console.ReadLine();
 
-            if (menuChoice == "1")
+            switch (menuChoice)
             {
-                DeliverPackage();
-            }
-            else if (menuChoice == "2")
-            {
-                _battery.Recharge();
-                Console.WriteLine("\nBattery recharged!");
-            }
-            else if (menuChoice == "3")
-            {
-                _controller.ShowRecords();
-            }
-            else if (menuChoice == "4")
-            {
-                break;
+                case "1":
+                    DeliverPackage();
+                    break;
+                case "2":
+                    _battery.Recharge();
+                    Console.WriteLine("\nBattery recharged!");
+                    break;
+                case "3":
+                    _controller.ShowRecords();
+                    break;
+                case "4":
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Try again.");
+                    break;
             }
         }
     }
 
     private void DeliverPackage()
     {
-        Console.WriteLine("\nChoose Destination:");
-        for (int i = 0; i < _buildings.Count; i++)
-        {
-            Console.WriteLine((i + 1) + ". " + _buildings[i]);
-        }
+        string destination = ChooseDestination();
+        if (destination == null) return;
 
-        int buildingChoice;
-        if (!int.TryParse(Console.ReadLine(), out buildingChoice) || buildingChoice < 1 || buildingChoice > _buildings.Count)
-        {
-            return;
-        }
+        DeliveryPackage packageSelected = ChoosePackage();
+        if (packageSelected == null) return;
 
-        string destination = _buildings[buildingChoice - 1];
-
-        Console.WriteLine("\nChoose Package:");
-        foreach (var pkg in _packages)
-        {
-            Console.WriteLine(pkg.Key + ". " + pkg.Value.Item1 + " (" + pkg.Value.Item2 + "kg)");
-        }
-
-        int packageChoice;
-        if (!int.TryParse(Console.ReadLine(), out packageChoice) || !_packages.ContainsKey(packageChoice))
-        {
-            return;
-        }
-
-        var packageSelected = _packages[packageChoice];
         var coords = _map.GetCoordinates(destination);
-        double targetX = coords.X;
-        double targetY = coords.Y;
-
-        _robot.ShowEstimate(targetX, targetY, packageSelected.Item2);
+        _robot.ShowEstimate(coords.X, coords.Y, packageSelected.Weight);
 
         Console.WriteLine("Start delivery? (y/n)");
-        string confirm = Console.ReadLine().Trim().ToLower();
-        if (confirm == "y")
-        {
-            _robot.MoveWithProgress(targetX, targetY, packageSelected.Item2);
-            _currentLocation = destination;
-            _controller.AddRecord(_robot.Name, destination, packageSelected.Item1, packageSelected.Item2);
-        }
+        if (Console.ReadLine().Trim().ToLower() != "y") return;
+
+        _robot.MoveWithProgress(coords.X, coords.Y, packageSelected.Weight);
+        _controller.AddRecord(_robot.Name, destination, packageSelected.Type, packageSelected.Weight);
+
+        ReturnToMC();
+    }
+
+    private string ChooseDestination()
+    {
+        Console.WriteLine("\nChoose Destination:");
+        for (int i = 0; i < _buildings.Count; i++)
+            Console.WriteLine($"{i + 1}. {_buildings[i]}");
+
+        if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > _buildings.Count)
+            return null;
+
+        return _buildings[choice - 1];
+    }
+
+    private DeliveryPackage ChoosePackage()
+    {
+        Console.WriteLine("\nChoose Package:");
+        foreach (var pkg in _packages)
+            Console.WriteLine($"{pkg.Key}. {pkg.Value.Item1} ({pkg.Value.Item2}kg)");
+
+        if (!int.TryParse(Console.ReadLine(), out int choice) || !_packages.ContainsKey(choice))
+            return null;
+
+        var selected = _packages[choice];
+        return new DeliveryPackage(selected.Item1, selected.Item2);
+    }
+
+    private void ReturnToMC()
+    {
+        var mcCoords = _map.GetCoordinates("MC");
+        Console.WriteLine("\nReturning to MC for next delivery...");
+        _robot.MoveWithProgress(mcCoords.X, mcCoords.Y, 0);
+        _currentLocation = "MC";
     }
 }
